@@ -1,0 +1,26 @@
+# 專案檔案不要提交到 Git
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraform.lock.hcl
+
+# 敏感資訊
+*.pem
+*.key
+secrets.tfvars
+
+# 作業系統檔案
+.DS_Store
+Thumbs.db
+
+# IDE 設定
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# 備份檔案
+*.backup
