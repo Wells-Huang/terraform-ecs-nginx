@@ -1,6 +1,7 @@
 # Terraform ECS Nginx 部署指南
 
 此專案使用 Terraform 部署 ECS 上的 Nginx 和私有 API 服務。
+開發時使用 wsl環境
 
 ## 架構說明
 
@@ -98,23 +99,6 @@ RemoteAddr: 10.0.xx.xx:xxxxx
 GET /api HTTP/1.1
 Host: ecs-nginx-alb-xxxx.ap-northeast-1.elb.amazonaws.com
 ...
-```
-
-## 除錯
-
-### 進入 Nginx 容器
-
-```bash
-# 列出 Nginx 任務
-aws ecs list-tasks --cluster $(terraform output -raw ecs_cluster_name) --service-name $(terraform output -raw nginx_service_name)
-
-# 執行命令
-aws ecs execute-command \
-  --cluster $(terraform output -raw ecs_cluster_name) \
-  --task <TASK_ARN> \
-  --container nginx \
-  --interactive \
-  --command "/bin/sh"
 ```
 
 ### 檢查日誌
