@@ -11,6 +11,23 @@
 - **EFS**: 掛載 Nginx 設定檔，支援動態更新
 - **Cloud Map**: 服務探索，讓 Nginx 透過 DNS 找到 API
 
+## 檔案結構說明
+
+| 檔案名稱 | 用途描述 |
+|:--- |:--- |
+| `alb.tf` | **Application Load Balancer**: 配置 ALB、Listeners 和 Target Groups，負責將外部流量轉發給 Nginx。 |
+| `discovery.tf` | **Service Discovery**: 設定 Cloud Map 私有 DNS (如 `api.local`)，讓服務間可透過當地域名溝通。 |
+| `ecs.tf` | **ECS Core**: 建立 ECS Cluster 以及 CloudWatch Log Groups 用於收集容器日誌。 |
+| `efs.tf` | **Storage**: 建立 EFS 檔案系統與 Access Point，讓 Nginx 設定檔可持久化並動態更新。 |
+| `iam.tf` | **Permissions**: 定義 ECS 所需的 IAM Roles (Task Role & Execution Role)。 |
+| `provider.tf` | **Config**: 設定 Terraform Provider (AWS) 與版本限制 (原 `main.tf`)。 |
+| `outputs.tf` | **Outputs**: 定義部署後的輸出值 (如 Load Balancer DNS、EFS ID)。 |
+| `security.tf` | **Firewall**: 定義各服務的 Security Groups 規則 (ALB, Nginx, API, EFS)。 |
+| `service-api.tf` | **Microservice**: 定義私有 API 服務的 Task Definition 與 Service 配置 (Fargate)。 |
+| `service-nginx.tf` | **Web Server**: 定義 Nginx 服務的 Task Definition 與 Service 配置，包含 EFS 掛載設定。 |
+| `variables.tf` | **Inputs**: 定義專案變數 (Region, VPC CIDR, Image URLs 等)。 |
+| `vpc.tf` | **Network**: 建立完整的網路層 (VPC, Public/Private Subnets, NAT Gateway, Internet Gateway)。 |
+
 ## 前置需求
 
 1. AWS CLI 已設定並具備適當權限
